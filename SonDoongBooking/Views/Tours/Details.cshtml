@@ -1,0 +1,245 @@
+@model SonDoongBooking.Models.Tour
+@{
+    ViewData["Title"] = "Chi tiết Tour";
+}
+
+<div class="container py-5 mt-4">
+    
+    <div class="row mb-5" data-aos="zoom-in">
+        <div class="col-12">
+            <div class="position-relative shadow-lg rounded-4 overflow-hidden">
+                <img src="@Model.HinhAnh" class="w-100" style="height: 500px; object-fit: cover;" alt="@Model.TenTour">
+                <div class="position-absolute bottom-0 start-0 m-4">
+                    <span class="badge bg-success shadow-lg px-4 py-2 fs-5 rounded-pill border border-light">
+                        Hành trình @Model.SoNgay Ngày
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5 justify-content-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-5 fw-bold text-dark mb-4">@Model.TenTour</h1>
+            <hr class="text-success opacity-50 mb-4 w-25 mx-auto border-3">
+            
+            <h5 class="fw-bold text-dark mb-4 text-uppercase tracking-wider">Mô tả chuyến đi</h5>
+            <p class="text-secondary lh-lg fs-5 mb-0" style="text-align: justify;">
+                @Model.MoTa
+                <br><br>
+                Hãy chuẩn bị cho một chuyến phiêu lưu không thể nào quên cùng KTA Nature. Khám phá những hệ sinh thái độc đáo, vượt qua giới hạn bản thân và hòa mình vào thiên nhiên hùng vĩ. Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng đồng hành cùng bạn trên mọi nẻo đường.
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+        <div class="col-lg-8">
+            <div class="card bg-light border-0 shadow rounded-4 p-5 text-center border-bottom border-success border-5">
+                
+                <div class="tour-details-section text-start mt-2 mb-5">
+                    @if (Model?.TenTour != null && Model.TenTour.ToLower().Contains("sơn đoòng"))
+                    {
+                        <div class="mb-5" data-aos="fade-up">
+                            <h4 class="fw-bold text-success mb-3 pb-2 border-bottom border-success border-2 d-inline-block">✨ Điểm nhấn hành trình</h4>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><span class="me-2">🏕️</span> Cắm trại tại bãi trại đẹp nhất thế giới trong hang động.</li>
+                                        <li class="mb-2"><span class="me-2">🧗‍♂️</span> Chinh phục "Bức tường Việt Nam" khổng lồ cao 90m.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><span class="me-2">🦕</span> Khám phá rừng nguyên sinh ngay trong lòng hố sụt.</li>
+                                        <li class="mb-2"><span class="me-2">🏊‍♂️</span> Bơi lội trong dòng sông ngầm trong xanh mát lạnh.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h4 class="fw-bold text-success mb-4 pb-2 border-bottom border-success border-2 d-inline-block">🗺️ Lịch trình chi tiết (4 Ngày 3 Đêm)</h4>
+                            <div class="timeline-container ps-3 border-start border-3 border-success border-opacity-25 ms-3">
+                                <div class="timeline-item position-relative mb-4">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">1</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 1: Phong Nha – Bản Đoòng – Hang Én</h5>
+                                        <p class="mb-0 text-secondary">Bắt đầu hành trình đi bộ xuyên rừng quốc gia, lội suối để đến với Bản Đoòng yên bình. Sau bữa trưa bên suối, đoàn tiếp tục tiến vào cửa Hang Én vĩ đại để thiết lập bãi trại và ăn tối.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item position-relative mb-4">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">2</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 2: Hang Én – Sơn Đoòng – Bãi Trại 1</h5>
+                                        <p class="mb-0 text-secondary">Vượt qua những khối đá khổng lồ để chạm đến cửa hang Sơn Đoòng. Đu dây xuống lòng hang sâu thẳm, khám phá "Bàn chân chó" và cắm trại dưới ánh sáng rực rỡ từ hố sụt 1.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item position-relative mb-4">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">3</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 3: Vườn Địa Đàng – Bãi Trại 2</h5>
+                                        <p class="mb-0 text-secondary">Băng qua rừng nhiệt đới nội hang tại Hố sụt 2 (Vọng Khủng Long). Chiêm ngưỡng các rạn ngọc trai hang động và thạch nhũ trắng muốt trước khi về bãi trại thứ 2.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item position-relative">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">4</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 4: Bức tường Việt Nam – Kết thúc</h5>
+                                        <p class="mb-0 text-secondary">Thử thách lòng can đảm khi chinh phục Bức tường Việt Nam bằng thang và dây an toàn. Ra khỏi hang, đoàn đi bộ xuyên rừng trở về điểm đón của xe.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (Model?.TenTour != null && Model.TenTour.ToLower().Contains("hang én"))
+                    {
+                        <div class="mb-5" data-aos="fade-up">
+                            <h4 class="fw-bold text-success mb-3 pb-2 border-bottom border-success border-2 d-inline-block">✨ Điểm nhấn hành trình</h4>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><span class="me-2">🦅</span> Ngắm nhìn hàng vạn con chim én chao lượn tại cửa hang.</li>
+                                        <li class="mb-2"><span class="me-2">🏖️</span> Bãi trại nằm ngay trên bãi cát mịn bên bờ suối ngầm.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><span class="me-2">📸</span> Cơ hội sở hữu những bức ảnh "để đời" tại cửa hang đón nắng.</li>
+                                        <li class="mb-2"><span class="me-2">🍲</span> Thưởng thức đặc sản rừng do đội ngũ đầu bếp địa phương chuẩn bị.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h4 class="fw-bold text-success mb-4 pb-2 border-bottom border-success border-2 d-inline-block">🗺️ Lịch trình chi tiết (2 Ngày 1 Đêm)</h4>
+                            <div class="timeline-container ps-3 border-start border-3 border-success border-opacity-25 ms-3">
+                                <div class="timeline-item position-relative mb-4">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">1</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 1: Phong Nha – Bản Đoòng – Hang Én</h5>
+                                        <p class="mb-0 text-secondary">Trekking 11km băng qua thung lũng dốc và lội suối để đến Bản Đoòng - bản làng người Bru-Vân Kiều. Tiếp tục hành trình đến cửa Hang Én vĩ đại, nơi bạn sẽ cắm trại và bơi lội dưới dòng suối ngầm trong hang.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item position-relative">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">2</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 2: Khám phá sâu Hang Én – Trở về</h5>
+                                        <p class="mb-0 text-secondary">Buổi sáng, đoàn leo lên những dốc đá cao để chiêm ngưỡng toàn cảnh Hang Én từ trên cao. Sau đó, trekking ngược trở lại thung lũng để ra xe đón về Phong Nha.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (Model?.TenTour != null && Model.TenTour.ToLower().Contains("hang va"))
+                    {
+                        <div class="mb-5" data-aos="fade-up">
+                            <h4 class="fw-bold text-success mb-3 pb-2 border-bottom border-success border-2 d-inline-block">✨ Điểm nhấn hành trình</h4>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><span class="me-2">🧊</span> Chiêm ngưỡng hệ thống thạch nhũ tháp nón độc nhất thế giới.</li>
+                                        <li class="mb-2"><span class="me-2">🧗‍♀️</span> Sử dụng thiết bị kỹ thuật để leo vách đá chuyên nghiệp.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><span class="me-2">🦇</span> Lội nước sâu ngang hông trong bóng tối kì bí của hang động.</li>
+                                        <li class="mb-2"><span class="me-2">⛺</span> Cắm trại giữa rừng già, tận hưởng không khí thuần khiết nhất.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h4 class="fw-bold text-success mb-4 pb-2 border-bottom border-success border-2 d-inline-block">🗺️ Lịch trình chi tiết (2 Ngày 1 Đêm)</h4>
+                            <div class="timeline-container ps-3 border-start border-3 border-success border-opacity-25 ms-3">
+                                <div class="timeline-item position-relative mb-4">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">1</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 1: Phong Nha – Hang Nước Nứt – Bãi trại</h5>
+                                        <p class="mb-0 text-secondary">Khám phá hang Nước Nứt với bãi cát dài và thạch nhũ tuyệt đẹp. Sau đó di chuyển sâu vào rừng nguyên sinh để cắm trại tại khu vực bãi trại gần cửa Hang Va.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item position-relative">
+                                    <div class="timeline-badge bg-success text-white fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center shadow" style="width: 35px; height: 35px; left: -36px; top: 0;">2</div>
+                                    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+                                        <h5 class="fw-bold text-dark">Ngày 2: Chinh phục thạch nhũ Hang Va – Kết thúc</h5>
+                                        <p class="mb-0 text-secondary">Đây là phần hấp dẫn nhất: lội nước xuyên hang và leo vách đá bằng dây để chạm đến rừng thạch nhũ tháp nón kỳ ảo. Sau khi khám phá xong, đoàn trekking trở về điểm đón.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row g-4 mt-2" data-aos="fade-up">
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-success bg-opacity-10 rounded-4">
+                                <div class="card-body p-4 text-start">
+                                    <h6 class="fw-bold text-success mb-3">✅ Giá Tour Bao Gồm</h6>
+                                    <ul class="list-unstyled mb-0 text-dark opacity-75 small lh-lg">
+                                        <li>- Chuyên gia hang động và đội ngũ an toàn.</li>
+                                        <li>- Toàn bộ thiết bị an toàn, lều trại, túi ngủ.</li>
+                                        <li>- Các bữa ăn giàu dinh dưỡng trong suốt hành trình.</li>
+                                        <li>- Phí bảo vệ môi trường và tham quan.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-danger bg-opacity-10 rounded-4">
+                                <div class="card-body p-4 text-start">
+                                    <h6 class="fw-bold text-danger mb-3">❌ Không Bao Gồm</h6>
+                                    <ul class="list-unstyled mb-0 text-dark opacity-75 small lh-lg">
+                                        <li>- Phương tiện đến Quảng Bình.</li>
+                                        <li>- Trang phục cá nhân và bảo hiểm cá nhân.</li>
+                                        <li>- Đồ uống có cồn và tiền tip cho đội ngũ.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="text-dark fw-bold mb-4 mt-5">Sẵn sàng xách balo lên và đi?</h4>
+                
+                <div class="mb-4">
+                    @if (Model != null && Model.SoChoConTrong > 5) {
+                        <span class="badge bg-success-subtle text-success fs-6 px-4 py-2 rounded-pill border border-success">
+                            ✅ Đang mở bán (Còn @Model.SoChoConTrong chỗ)
+                        </span>
+                    } else if (Model != null && Model.SoChoConTrong > 0) {
+                        <span class="badge bg-warning-subtle text-danger fs-6 px-4 py-2 rounded-pill border border-warning shadow-sm">
+                            🔥 Nhanh tay lên! Chỉ còn đúng @Model.SoChoConTrong chỗ!
+                        </span>
+                    } else {
+                        <span class="badge bg-danger fs-6 px-4 py-2 rounded-pill shadow-sm">
+                            ❌ Rất tiếc, Tour này đã kín chỗ!
+                        </span>
+                    }
+                </div>
+
+                <h2 class="text-warning fw-bold mb-4 display-6">
+                    @Model?.Gia.ToString("N0") <span class="fs-5 text-muted fw-normal">VNĐ / Người</span>
+                </h2>
+                
+                <div class="d-grid gap-3 d-md-flex justify-content-md-center mt-2">
+                    @if (Model != null && Model.SoChoConTrong > 0) {
+                        <a href="/Bookings/Create?tourId=@Model.Id" class="btn btn-success btn-lg fw-bold px-5 py-3 shadow-sm rounded-pill">
+                            🚀 ĐẶT TOUR NGAY
+                        </a>
+                    } else {
+                        <button class="btn btn-secondary btn-lg fw-bold px-5 py-3 shadow-sm rounded-pill" disabled>
+                            🔒 ĐÃ HẾT CHỖ
+                        </button>
+                    }
+                    
+                    <a href="/#tours" class="btn btn-outline-dark btn-lg fw-bold px-5 py-3 rounded-pill">
+                        Xem tour khác
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

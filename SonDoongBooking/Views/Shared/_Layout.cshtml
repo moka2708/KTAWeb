@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - KTA Nature</title>
+    <meta property="og:title" content="KTA Nature - Thám Hiểm Kỳ Quan Sơn Đoòng" />
+    <meta property="og:description" content="Hệ thống đặt tour thám hiểm hang động lớn nhất thế giới. Trải nghiệm dịch vụ chuyên nghiệp, an toàn và đẳng cấp ngay hôm nay!" />
+    <meta property="og:image" content="https://oxalisadventure.com/wp-content/uploads/2024/02/Hang-Son-Doong-4.jpg" /> 
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SonDoongBooking.styles.css" asp-append-version="true" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom shadow-sm mb-0 py-2 fixed-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-success fs-3" asp-area="" asp-controller="Home" asp-action="Index">KTA <span class="text-dark">NATURE</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-bold px-3" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-bold px-3" href="/#tours">Sản phẩm (Tour)</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center mt-3 mt-lg-0">
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <span class="me-3 fw-bold text-dark">
+                                Chào, <span class="text-success">@User.Identity.Name</span>!
+                            </span>
+
+                            @if (User.Identity.Name == "admin@ktanature.com")
+                            {
+                                <a asp-controller="Tours" asp-action="Create" class="btn btn-sm btn-outline-success fw-bold me-2">➕ Thêm Tour</a>
+                                <a href="/Bookings" class="btn btn-sm btn-warning fw-bold shadow-sm me-2">📋 Đơn hàng</a>
+                                <a href="/Tours/Dashboard" class="btn btn-sm btn-info fw-bold shadow-sm me-3 text-white">📊 Thống kê</a>
+                            }
+                            
+                            @if (User.Identity?.Name == "admin@ktanature.com")
+                            {
+                                <a href="/Bookings" class="btn btn-primary btn-sm fw-bold me-3">Đơn của tôi</a>
+                            }
+
+                            <form class="form-inline m-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
+                                <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">Đăng xuất</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a href="/Identity/Account/Login" class="btn btn-outline-success fw-bold me-2">Đăng nhập</a>
+                            <a href="/Identity/Account/Register" class="btn btn-success fw-bold shadow-sm">Đăng ký</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+   <div class="container-fluid p-0 m-0 min-vh-100">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+   <footer class="bg-dark text-white pt-5 pb-3">
+    <div class="container">
+        <div class="row g-4 mb-4 text-start">
+            <div class="col-lg-4">
+                <h4 class="fw-bold text-uppercase mb-4 border-start border-success border-4 ps-3">KTA NATURE</h4>
+                <p class="opacity-75 lh-lg">
+                    Chúng tôi tự hào là đơn vị tiên phong mang đến những trải nghiệm thám hiểm thiên nhiên chân thực và an toàn nhất. Hãy để KTA Nature đánh thức bản năng phiêu lưu trong bạn.
+                </p>
+            </div>
+
+            <div class="col-lg-4 ps-lg-5">
+                <h4 class="fw-bold text-uppercase mb-4 border-start border-success border-4 ps-3">THÔNG TIN LIÊN HỆ</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <span class="me-2">📍</span> <strong>Trụ sở:</strong> Phong Nha, Bố Trạch, Quảng Bình
+                    </li>
+                    <li class="mb-3">
+                        <span class="me-2">📞</span> <strong>Hotline tư vấn:</strong> 0392624323
+                    </li>
+                    <li class="mb-3">
+                        <span class="me-2">✉️</span> <strong>Email:</strong> aolaoxao123@gmail.com
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-4">
+                <h4 class="fw-bold text-uppercase mb-4 border-start border-success border-4 ps-3">KẾT NỐI VỚI CHÚNG TÔI</h4>
+                <div class="d-flex gap-3 mb-4">
+                    <a href="https://www.facebook.com/moka.2708/" target="_blank" class="social-icon icon-fb">FB</a>
+                    <a href="https://zalo.me/0392624323" target="_blank" class="social-icon icon-zl">ZL</a>
+                    <a href="https://www.instagram.com/moka_2708/" target="_blank" class="social-icon icon-ig">IG</a>
+                </div>
+                <p class="small opacity-75">Đăng ký nhận ưu đãi các Tour mới nhất!</p>
+            </div>
+        </div>
+
+        <hr class="opacity-25 mt-5">
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small opacity-75">
+            <p class="mb-0">© 2026 KTA Nature. Nền tảng được phát triển bởi Moka.</p>
+            <div class="d-flex gap-4 mt-3 mt-md-0">
+                <a href="#" class="text-white text-decoration-none hover-link">Điều khoản</a>
+                <a href="#" class="text-white text-decoration-none hover-link">Chính sách bảo mật</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* CSS để tạo các vòng tròn mạng xã hội như trong ảnh */
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        background-color: rgba(255,255,255,0.05);
+    }
+    
+    .icon-fb { border: 1px solid #00ff88; color: #00ff88; } /* Màu xanh ngọc giống ảnh */
+    .icon-zl { border: 1px solid #ff4d4d; color: #ff4d4d; } /* Đổi YT thành ZL màu đỏ */
+    .icon-ig { border: 1px solid #00ccff; color: #00ccff; } /* Màu xanh dương */
+
+    .social-icon:hover {
+        transform: translateY(-5px);
+        background-color: white;
+        color: #1a1d20;
+    }
+
+    .hover-link:hover {
+        color: #00ff88 !important;
+        text-decoration: underline !important;
+    }
+
+    /* =========================================
+       GÓI ĐỘ MƯỢT (SMOOTH UI) ĐƯỢC THÊM VÀO
+       ========================================= */
+    html {
+        scroll-behavior: smooth !important;
+    }
+
+    a, button, .btn, .card, .dropdown-item, .nav-link {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Hiệu ứng mờ dần khi chuyển trang */
+   /* Hiệu ứng mờ dần khi chuyển trang */
+    body {
+        padding-top: 85px; /* ĐÂY LÀ CHÌA KHÓA: Đẩy toàn bộ body xuống bằng đúng độ dày của Navbar */
+       
+    }
+    .reveal, [data-aos] {
+        opacity: 1 !important;
+        transform: translate(0) !important;
+        visibility: visible !important;
+    }
+</style>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, 
+            once: true,     
+            offset: 100     
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('a[href]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    
+                    }, 400);
+                });
+            });
+        });
+    </script>
+    <script>
+        AOS.init({
+            duration: 1000, 
+            once: true,     
+            offset: 100     
+        });
+
+        // ==========================================
+        // LIỀU THUỐC TRỊ BỆNH TRẮNG TRANG KHI F5
+        // ==========================================
+        window.addEventListener('load', function() {
+            // 1. Ép thư viện AOS tính toán lại từ đầu sau khi ảnh đã tải xong
+            AOS.refresh(); 
+            
+            // 2. Tạo một cú cuộn chuột "ảo" để đánh thức các file JS của sếp
+            window.dispatchEvent(new Event('scroll')); 
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="~/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Thanh toán trực tuyến";
+}
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center" data-aos="fade-up">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="bg-dark text-white text-center py-4">
+                    <h3 class="fw-bold mb-0">CỔNG THANH TOÁN KTA NATURE</h3>
+                    <p class="text-secondary mb-0 mt-2">Mã giao dịch: <span class="text-warning fw-bold">@ViewBag.MaGiaoDich</span></p>
+                </div>
+
+                <div class="card-body p-5">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-md-6 text-center border-end">
+                            <h5 class="fw-bold text-dark mb-4">Quét mã để thanh toán</h5>
+                            <div class="p-3 bg-light rounded-4 d-inline-block shadow-sm mb-4">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=KTA_NATURE_PAYMENT_@ViewBag.MaGiaoDich" alt="QR Code" class="img-fluid rounded">
+                            </div>
+                            <div class="d-flex justify-content-center gap-3">
+                                <img src="https://uudai.ncb-bank.vn/upload/qua-tang-ban-moi-lien-ket-ncb-voi-momo/momo.png" height="30" alt="Momo">
+                                <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Icon-VPBank.png" height="30" alt="VNPay">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-center">
+                            <h5 class="text-muted mb-3">Thời gian thanh toán còn lại</h5>
+                            <h1 class="display-4 fw-bold text-danger mb-4" id="countdown">10:00</h1>
+                            
+                            <div class="alert alert-warning text-start mb-4" role="alert">
+                                <strong>Lưu ý:</strong> Vui lòng không tắt trình duyệt trong quá trình thanh toán để tránh lỗi giao dịch.
+                            </div>
+
+                            <button id="btnConfirmPay" class="btn btn-success btn-lg w-100 fw-bold shadow-sm rounded-pill py-3">
+                                <span id="btnText">TÔI ĐÃ CHUYỂN KHOẢN</span>
+                                <div id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Chạy đồng hồ đếm ngược 10 phút
+    let time = 600; 
+    const countdownEl = document.getElementById('countdown');
+    
+    setInterval(() => {
+        const minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        countdownEl.innerHTML = `${minutes}:${seconds}`;
+        if(time > 0) time--;
+    }, 1000);
+
+    // 2. Xử lý nút bấm "Tôi đã chuyển khoản"
+    document.getElementById('btnConfirmPay').addEventListener('click', function() {
+        const btn = this;
+        const text = document.getElementById('btnText');
+        const spinner = document.getElementById('btnSpinner');
+
+        // Đổi trạng thái nút thành Đang xử lý
+        btn.disabled = true;
+        btn.classList.replace('btn-success', 'btn-secondary');
+        text.innerText = 'Đang xác minh giao dịch... ';
+        spinner.classList.remove('d-none');
+
+        // Giả lập hệ thống ngân hàng đang check (chờ 3 giây)
+        setTimeout(() => {
+            alert('🎉 THANH TOÁN THÀNH CÔNG!\nCảm ơn bạn đã lựa chọn KTA Nature. Chúc bạn một chuyến đi Sơn Đoòng tuyệt vời!');
+            // Thanh toán xong thì đá về trang chủ
+            window.location.href = '/';
+        }, 3000);
+    });
+</script>

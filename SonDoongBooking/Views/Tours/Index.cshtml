@@ -1,0 +1,65 @@
+@model IEnumerable<SonDoongBooking.Models.Tour>
+@{
+    ViewData["Title"] = "Quản lý danh sách Tour";
+}
+
+<div class="container-fluid bg-light py-5 min-vh-100">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-success mb-0">🏕️ QUẢN LÝ SẢN PHẨM (TOUR)</h2>
+            <a asp-action="Create" class="btn btn-success rounded-pill px-4 fw-bold shadow-sm">➕ Thêm Tour Mới</a>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-header bg-dark text-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Danh sách Tour đang mở bán</h5>
+                <a href="/Tours/Dashboard" class="btn btn-sm btn-outline-light fw-bold">📊 Xem Thống kê</a>
+            </div>
+            
+            <div class="card-body p-0 table-responsive bg-white">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3">Tên Tour</th>
+                            <th>Giá vé</th>
+                            <th>Kho (Chỗ trống)</th>
+                            <th class="text-center">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model != null && Model.Any()) {
+                            foreach(var item in Model) {
+                                <tr>
+                                    <td class="ps-4 fw-bold text-dark fs-5">@item.TenTour</td>
+                                    <td class="fw-bold text-success fs-5">@item.Gia.ToString("N0") đ</td>
+                                    
+                                    <td>
+                                        @if(item.SoChoConTrong > 5) {
+                                            <span class="badge bg-info text-dark px-3 py-2 shadow-sm fs-6">🟢 @item.SoChoConTrong chỗ</span>
+                                        } else if (item.SoChoConTrong > 0) {
+                                            <span class="badge bg-warning text-dark px-3 py-2 shadow-sm fs-6">🔥 Chỉ còn @item.SoChoConTrong chỗ</span>
+                                        } else {
+                                            <span class="badge bg-danger px-3 py-2 shadow-sm fs-6">❌ Đã Hết Chỗ</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary fw-bold">Sửa</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info fw-bold">Xem</a>
+                                    </td>
+                                </tr>
+                            }
+                        } else {
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted fw-bold">
+                                    <div class="fs-1 mb-3">📭</div>
+                                    Chưa có Tour nào trong hệ thống! Bấm "Thêm Tour Mới" ngay Giám đốc ơi!
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

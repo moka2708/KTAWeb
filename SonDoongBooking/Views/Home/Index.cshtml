@@ -1,0 +1,510 @@
+﻿@model IEnumerable<SonDoongBooking.Models.Tour>
+@{
+    Layout = null;
+}
+<style>
+    /* Ép tất cả các class reveal và aos phải hiện 100% ngay lập tức */
+    .reveal, 
+    [data-aos], 
+    [data-aos^="fade"][data-aos^="fade"] {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+        transition: none !important;
+        animation: none !important;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơn Đoòng | Trái Tim Của Trái Đất</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#main-nav">
+
+    <nav id="main-nav" class="navbar navbar-expand-xl fixed-top px-3">
+        <div class="container-fluid px-lg-5"> <a class="navbar-brand fw-bold fs-3 text-nowrap" href="#home">KTA <span class="text-success">NATURE</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">                    
+                    <li class="nav-item"><a class="nav-link px-3 text-nowrap" href="#home">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 text-nowrap" href="#history">Lịch sử</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 text-nowrap" href="#ecosystem">Sinh thái</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 text-nowrap" href="#geology">Kiến tạo</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 text-nowrap" href="#gallery">Thư viện ảnh</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 text-nowrap" href="#tours">Đặt Tour</a></li>
+                </ul>
+                <div class="d-flex align-items-center ms-lg-4 mt-3 mt-lg-0">
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle rounded-pill fw-bold shadow-sm px-4 text-nowrap" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="text-dark me-1">Chào,</span> @User.Identity.Name
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 rounded-4" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item fw-bold py-2" href="/Bookings/MyBookings">🎒 Tour của tôi</a></li>
+                
+                @if (User.Identity.Name == "admin@ktanature.com")
+                {
+                    <li><a class="dropdown-item fw-bold text-warning py-2" href="/Bookings">📋 Quản lý Đơn</a></li>
+                }
+                
+                <li><hr class="dropdown-divider opacity-25"></li>
+                <li>
+                    <form class="form-inline m-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
+                        <button type="submit" class="dropdown-item fw-bold text-danger py-2">Đăng xuất</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <a href="/Identity/Account/Login" class="btn btn-outline-success rounded-pill fw-bold px-4 me-2 text-nowrap">Đăng nhập</a>
+        <a href="/Identity/Account/Register" class="btn btn-success rounded-pill fw-bold px-4 shadow-sm text-nowrap">Đăng ký</a>
+    }
+</div>
+            </div>
+        </div>
+    </nav>
+
+    @if (TempData["ThongBao"] != null)
+    {
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 80px;">
+            <div class="alert alert-success alert-dismissible fade show shadow-lg border-0 rounded-4" role="alert">
+                <strong>🎉 Chốt đơn!</strong> @TempData["ThongBao"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    }
+
+    <header id="home" class="hero-header" data-aos="fade-down">
+        <div class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/images/Bia.jpg" class="d-block w-100" alt="Hang Sơn Đoòng">
+                    <div class="carousel-caption text-start px-4">
+                        <span class="badge bg-success mb-3 fs-6 px-3 py-2 rounded-pill tracking-wider">KỲ QUAN THIÊN NHIÊN THẾ GIỚI</span>
+                        <h1 class="display-1 fw-bold text-white mb-3">Sơn Đoòng</h1>
+                        <p class="fs-4 mb-4 text-white opacity-90 w-75">Một thế giới ngầm 3 triệu năm tuổi ẩn mình giữa đại ngàn Phong Nha - Kẻ Bàng. Nơi mây trời, rừng rậm và dòng sông ngầm hòa quyện tạo nên một vũ trụ thu nhỏ.</p>
+                        <a href="#tours" class="btn btn-success btn-lg rounded-pill px-5 py-3 shadow-lg fw-bold">Khám phá bí ẩn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="history" class="py-5 editorial-section">
+        <div class="container reveal py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <h6 class="text-success fw-bold tracking-wider mb-2">HÀNH TRÌNH TÌM KIẾM</h6>
+                    <h2 class="display-5 fw-bold mb-4">Tiếng Gầm Của Dòng Sông Ngầm</h2>
+                    <p class="lead text-dark opacity-75 mb-4">Năm 1990, trong một lần đi rừng tìm trầm hương, một người đàn ông địa phương tên <strong>Hồ Khanh</strong> đã tình cờ phát hiện ra một vòm hang đá vôi lùa ra những luồng gió lạnh buốt và tiếng gầm rú của dòng sông ngầm.</p>
+                    <p class="text-muted">Tuy nhiên, bẵng đi 15 năm, cửa hang ấy vẫn chìm trong quên lãng cho đến khi đoàn thám hiểm hang động Hoàng gia Anh (BCRA) do Howard Limbert dẫn đầu đến Việt Nam. Năm 2009, Hồ Khanh đã đưa đoàn thám hiểm quay lại vị trí năm xưa. Lịch sử chính thức ghi nhận Sơn Đoòng là hang động tự nhiên lớn nhất hành tinh, xô đổ mọi kỷ lục trước đó.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="position-relative">
+                        <img src="~/images/Tiengngam.webp" class="img-fluid rounded-4 shadow-lg w-100" alt="Cửa hang Sơn Đoòng">
+                        <div class="position-absolute bottom-0 end-0 bg-white p-3 m-4 rounded-3 shadow-sm">
+                            <h5 class="fw-bold text-success mb-0">1990</h5>
+                            <small class="text-muted">Năm đầu tiên được phát hiện</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 text-white text-center position-relative highlight-banner">
+        <div class="container reveal py-5 position-relative z-1">
+            <h2 class="display-5 fw-bold mb-4">Sự Vĩ Đại Vượt Trí Tưởng Tượng</h2>
+            <p class="fs-5 opacity-75 w-75 mx-auto mb-5">Sơn Đoòng rộng lớn đến mức nó sở hữu hệ thống thời tiết riêng. Bạn có thể nhét vừa một block nhà 40 tầng ở Manhattan hay bay một chiếc Boeing 747 qua đoạn hang rộng nhất.</p>
+            <div class="row justify-content-center g-4" id="counter-section">
+                <div class="col-md-3 col-6"><h1 class="display-3 fw-bold text-success"><span class="counter" data-target="38">0</span>M+</h1><p>Khối lượng (m³)</p></div>
+                <div class="col-md-3 col-6"><h1 class="display-3 fw-bold text-success"><span class="counter" data-target="9">0</span>km</h1><p>Tổng chiều dài</p></div>
+                <div class="col-md-3 col-6"><h1 class="display-3 fw-bold text-success"><span class="counter" data-target="200">0</span>m</h1><p>Chiều cao trần hang</p></div>
+                <div class="col-md-3 col-6"><h1 class="display-3 fw-bold text-success"><span class="counter" data-target="3">0</span>tr</h1><p>Năm hình thành</p></div>
+            </div>
+        </div>
+        <div class="bg-overlay"></div>
+    </section>
+
+    <section id="ecosystem" class="py-5 bg-light editorial-section">
+        <div class="container reveal py-5">
+            <div class="text-center mb-5">
+                <h6 class="text-success fw-bold tracking-wider">HỆ SINH THÁI KHÉP KÍN</h6>
+                <h2 class="display-4 fw-bold">Vườn Địa Đàng Trong Lòng Đất</h2>
+                <p class="lead text-muted w-75 mx-auto mt-3">Sự sụp đổ của trần hang từ hàng trăm ngàn năm trước đã tạo ra các "Hố sụt" (Doline), mang ánh sáng mặt trời xuống lòng đất và ươm mầm cho sự sống.</p>
+            </div>
+            <div class="row g-5 mt-3">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden feature-card">
+                        <div class="card-body p-5">
+                            <h1 class="text-success mb-4">🦕</h1>
+                            <h4 class="fw-bold">Hố Sụt 1: Vọng Khủng Long</h4>
+                            <p class="text-muted mt-3">"Watch Out for Dinosaurs" - Nơi trần hang sập xuống tạo thành giếng trời khổng lồ. Sự chênh lệch nhiệt độ tạo ra những lớp sương mù dày đặc rủ xuống như một thế giới thời tiền sử.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden feature-card">
+                        <div class="card-body p-5">
+                            <h1 class="text-success mb-4">🌿</h1>
+                            <h4 class="fw-bold">Hố Sụt 2: Vườn Địa Đàng</h4>
+                            <p class="text-muted mt-3">"Garden of Edam" là nơi thảm thực vật bùng nổ mạnh mẽ nhất. Rừng cây có thể cao tới 30m, là nhà của nhiều loài chim, bướm sếu bay lượn và các loài côn trùng mù đặc hữu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="geology" class="py-5 editorial-section">
+        <div class="container reveal py-5">
+            <div class="row align-items-center g-5 flex-row-reverse">
+                <div class="col-lg-6">
+                    <h6 class="text-success fw-bold tracking-wider mb-2">ĐIÊU KHẮC CỦA THIÊN NHIÊN</h6>
+                    <h2 class="display-5 fw-bold mb-4">Tuyệt Tác Từ Nước Và Thời Gian</h2>
+                    <p class="lead text-dark opacity-75 mb-4">Sự xói mòn của dòng sông ngầm chảy rào rạt qua rặng núi đá vôi dọc theo đứt gãy địa chất đã vô tình điêu khắc nên những kỳ quan siêu thực.</p>
+                    
+                    <ul class="list-unstyled mt-4">
+                        <li class="mb-4">
+                            <h5 class="fw-bold text-dark"><span class="text-success me-2">⛰️</span>Bức Tường Việt Nam</h5>
+                            <p class="text-muted ms-4">Một bức tường thạch nhũ khổng lồ cao 90m chặn ngang ở đoạn cuối lòng hang. Đây được xem là thử thách leo dây thót tim và khắc nghiệt nhất đối với bất kỳ nhà thám hiểm nào.</p>
+                        </li>
+                        <li class="mb-4">
+                            <h5 class="fw-bold text-dark"><span class="text-success me-2">🐾</span>Khối "Bàn Tay Chó"</h5>
+                            <p class="text-muted ms-4">Một măng đá (stalagmite) sừng sững cao đến 70m đứng hiên ngang giữa bóng tối, với hình dáng trông giống hệt như một bàn tay khổng lồ đang vươn lên đón ánh sáng từ hố sụt.</p>
+                        </li>
+                        <li class="mb-4">
+                            <h5 class="fw-bold text-dark"><span class="text-success me-2">⚪</span>Ngọc Trai Hang Động</h5>
+                            <p class="text-muted ms-4">Những giọt nước mang tinh thể canxi nhỏ xuống qua hàng vạn năm bao cực lấy các hạt cát, tạo ra những viên ngọc trai đá vôi to bằng quả bóng chày nằm rải rác dưới các khe nước cạn.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 d-flex flex-column gap-4 text-center">
+                    <img src="~/images/khoivoi.webp" class="img-fluid rounded-4 shadow-sm geology-image" alt="Thạch nhũ trong hang">
+                    <img src="~/images/Hangnuocrut.webp" class="img-fluid rounded-4 shadow-sm geology-image" alt="Đá vôi kiến tạo">
+                </div>
+            </div>
+        </div>
+    </section>
+<section id="gallery" class="py-5 bg-light editorial-section">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h6 class="text-success fw-bold tracking-wider text-uppercase">GÓC NHÌN CHÂN THỰC</h6>
+                <h2 class="display-5 fw-bold text-dark mb-3">Thư Viện Ảnh</h2>
+                <p class="text-secondary fs-5">Những khoảnh khắc ngoạn mục được ghi lại bởi các nhà thám hiểm.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="gallery-item overflow-hidden rounded-4 shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImg').src=this.querySelector('img').src">
+                        <img src="~/images/6.jpg" class="img-fluid w-100 h-100 object-fit-cover hover-zoom" style="min-height: 250px; cursor: zoom-in;" alt="Sơn Đoòng 1">
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="gallery-item overflow-hidden rounded-4 shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImg').src=this.querySelector('img').src">
+                        <img src="~/images/1.webp" class="img-fluid w-100 h-100 object-fit-cover hover-zoom" style="min-height: 250px; cursor: zoom-in;" alt="Sơn Đoòng 2">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="gallery-item overflow-hidden rounded-4 shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImg').src=this.querySelector('img').src">
+                        <img src="~/images/2.webp" class="img-fluid w-100 h-100 object-fit-cover hover-zoom" style="min-height: 250px; cursor: zoom-in;" alt="Sơn Đoòng 3">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="gallery-item overflow-hidden rounded-4 shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImg').src=this.querySelector('img').src">
+                        <img src="~/images/3.webp" class="img-fluid w-100 h-100 object-fit-cover hover-zoom" style="min-height: 250px; cursor: zoom-in;" alt="Sơn Đoòng 4">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="gallery-item overflow-hidden rounded-4 shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImg').src=this.querySelector('img').src">
+                        <img src="~/images/4.webp" class="img-fluid w-100 h-100 object-fit-cover hover-zoom" style="min-height: 250px; cursor: zoom-in;" alt="Sơn Đoòng 5">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="gallery-item overflow-hidden rounded-4 shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImg').src=this.querySelector('img').src">
+                        <img src="~/images/5.jpeg" class="img-fluid w-100 h-100 object-fit-cover hover-zoom" style="min-height: 250px; cursor: zoom-in;" alt="Sơn Đoòng 6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .hover-zoom {
+            transition: transform 0.4s ease-in-out;
+        }
+        .gallery-item:hover .hover-zoom {
+            transform: scale(1.08); /* Zoom nhẹ lên 8% khi lia chuột */
+        }
+    </style>
+    <section id="gallery" class="py-5 bg-light editorial-section">
+        </section>
+
+    <section id="tours" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h6 class="text-success fw-bold tracking-wider text-uppercase">HÀNH TRÌNH ĐỘC QUYỀN</h6>
+                <h2 class="display-5 fw-bold text-dark mb-3">Các Gói Tour Nổi Bật</h2>
+                <p class="text-secondary fs-5 mb-4">Chọn cho mình một cuộc phiêu lưu để đời cùng KTA Nature.</p>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated && User.Identity.Name == "admin@ktanature.com")
+                {
+                    <a href="/Tours/Create" class="btn btn-primary btn-lg rounded-pill px-4 fw-bold shadow-sm">
+                        ➕ Thêm Tour Mới
+                    </a>
+                }
+            </div>
+
+            <div class="row g-4 mb-5">
+                @foreach (var tour in Model)
+                {
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+                        <div class="card h-100 shadow-lg border-0 rounded-4 overflow-hidden">
+                            <div class="position-relative">
+                                <img src="@tour.HinhAnh" class="card-img-top w-100" style="height: 250px; object-fit: cover;" alt="@tour.TenTour">
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <span class="badge bg-success shadow-sm p-2 fs-6 rounded-pill">@tour.SoNgay Ngày</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h4 class="card-title fw-bold text-dark mb-3">@tour.TenTour</h4>
+                                <p class="card-text text-secondary mb-3 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                    @tour.MoTa
+                                </p>
+                                
+                                <div class="mb-3">
+                                    @if (tour.SoChoConTrong > 5)
+                                    {
+                                        <span class="badge bg-success-subtle text-success border border-success rounded-pill px-3 py-1">
+                                            ✅ Đang mở bán (Còn @tour.SoChoConTrong chỗ)
+                                        </span>
+                                    }
+                                    else if (tour.SoChoConTrong > 0)
+                                    {
+                                        <span class="badge bg-warning-subtle text-danger border border-warning rounded-pill px-3 py-1 shadow-sm fw-bold">
+                                            🔥 Nhanh tay! Chỉ còn @tour.SoChoConTrong chỗ
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary text-white rounded-pill px-3 py-1 shadow-sm">
+                                            🔒 Đã kín chỗ
+                                        </span>
+                                    }
+                                </div>
+
+                                <hr class="text-secondary opacity-25 mb-4">
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-auto">
+                                    <h4 class="text-success fw-bold m-0">@tour.Gia.ToString("N0") đ</h4>
+                                    <div class="d-flex gap-2">
+                                        <a href="/Tours/Details/@tour.Id" class="btn btn-outline-secondary rounded-pill px-3 fw-bold">Chi tiết</a>
+                                        
+                                        @if (tour.SoChoConTrong > 0)
+{
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <a href="/Bookings/Create?tourId=@tour.Id" class="btn btn-dark rounded-pill px-4 fw-bold shadow-sm">Đặt Ngay</a>
+    }
+    else
+    {
+        <button onclick="yeuCauDangNhap(@tour.Id)" class="btn btn-dark rounded-pill px-4 fw-bold shadow-sm">Đặt Ngay</button>
+    }
+}
+                                        else
+                                        {
+                                            <button class="btn btn-secondary rounded-pill px-4 fw-bold shadow-sm" disabled>Hết vé</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white pt-5 pb-3 mt-5 border-top border-success border-5">
+        <div class="container">
+            <div class="row g-4 mb-4 text-start">
+                <div class="col-lg-4">
+                    <h4 class="fw-bold text-uppercase mb-4 border-start border-success border-4 ps-3">KTA NATURE</h4>
+                    <p class="opacity-75 lh-lg">
+                        Chúng tôi tự hào là đơn vị tiên phong mang đến những trải nghiệm thám hiểm thiên nhiên chân thực và an toàn nhất. Hãy để KTA Nature đánh thức bản năng phiêu lưu trong bạn.
+                    </p>
+                </div>
+
+                <div class="col-lg-4 ps-lg-5">
+                    <h4 class="fw-bold text-uppercase mb-4 border-start border-success border-4 ps-3">THÔNG TIN LIÊN HỆ</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <span class="me-2">📍</span> <strong>Trụ sở:</strong> Phong Nha, Bố Trạch, Quảng Bình
+                        </li>
+                        <li class="mb-3">
+                            <span class="me-2">📞</span> <strong>Hotline tư vấn:</strong> 0392.624.323
+                        </li>
+                        <li class="mb-3">
+                            <span class="me-2">✉️</span> <strong>Email:</strong> aolaoxao123@gmail.com
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <h4 class="fw-bold text-uppercase mb-4 border-start border-success border-4 ps-3">KẾT NỐI VỚI CHÚNG TÔI</h4>
+                    <div class="d-flex gap-3 mb-4">
+                        <a href="https://www.facebook.com/moka.2708/" target="_blank" class="social-icon icon-fb">FB</a>
+                        <a href="https://zalo.me/0392624323" target="_blank" class="social-icon icon-zl">ZL</a>
+                        <a href="https://www.instagram.com/moka_2708/" target="_blank" class="social-icon icon-ig">IG</a>
+                    </div>
+                    <p class="small opacity-75">Đăng ký nhận ưu đãi các Tour mới nhất!</p>
+                </div>
+            </div>
+
+            <hr class="opacity-25 mt-5">
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small opacity-75">
+                <p class="mb-0">© 2026 KTA Nature. Nền tảng được phát triển bởi Moka.</p>
+                <div class="d-flex gap-4 mt-3 mt-md-0">
+                    <a href="#" class="text-white text-decoration-none">Điều khoản</a>
+                    <a href="#" class="text-white text-decoration-none">Chính sách bảo mật</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background-color: rgba(255,255,255,0.05);
+        }
+        .icon-fb { border: 1px solid #00ff88; color: #00ff88; }
+        .icon-zl { border: 1px solid #ff4d4d; color: #ff4d4d; }
+        .icon-ig { border: 1px solid #00ccff; color: #00ccff; }
+        .social-icon:hover { transform: translateY(-5px); background-color: white; color: #1a1d20; box-shadow: 0 5px 15px rgba(0,255,136,0.3); }
+        
+        /* --------------------------------------------------- */
+        /* CODE MỚI ĐƯỢC THÊM VÀO ĐỂ KHẮC PHỤC LỖI ZOOM ẢNH BÌA */
+        /* --------------------------------------------------- */
+        .hero-header .carousel-item img {
+            max-height: 85vh;          /* Giới hạn chiều cao ảnh ở mức 85% màn hình */
+            object-fit: cover;         /* Đảm bảo ảnh tự cắt gọt cho vừa khung mà không bị méo */
+            object-position: center;   /* Căn giữa ảnh để luôn thấy đoạn đẹp nhất */
+        }
+        
+        /* Tiện tay thu gọn Navbar một chút để giao diện thanh thoát hơn */
+        #main-nav {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+    </style>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0 border-0" style="background-color: rgba(0, 0, 0, 0.95);">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-4 z-3" 
+                        data-bs-dismiss="modal" aria-label="Close" style="width: 1.5rem; height: 1.5rem;"></button>
+                <div class="modal-body d-flex justify-content-center align-items-center p-0" 
+                    onclick="bootstrap.Modal.getInstance(document.getElementById('imageModal')).hide()" style="cursor: zoom-out;">
+                    <img id="modalImg" src="" class="img-fluid" 
+                        style="max-height: 100vh; max-width: 100vw; object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.5);" 
+                        alt="Phóng to ảnh">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+    // Hàm xử lý khi khách chưa đăng nhập bấm Đặt Ngay
+    function yeuCauDangNhap(tourId) {
+        // 1. Hiện thông báo
+        alert("Khoan đã bạn ơi! Bạn cần Đăng nhập hoặc Đăng ký tài khoản để đặt Tour nhé 🏕️");
+        
+        // 2. Chuyển hướng sang trang Đăng nhập
+        // Lệnh ReturnUrl giúp hệ thống nhớ: Đăng nhập xong thì quay lại đúng cái form đặt Tour này luôn
+        window.location.href = "/Identity/Account/Login?ReturnUrl=%2FBookings%2FCreate%3FtourId%3D" + tourId;
+    }
+</script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 1. TRỊ BỆNH TRẮNG TRANG (Ép AOS nhận diện lại tọa độ sau khi F5)
+        setTimeout(function() {
+            window.dispatchEvent(new Event('resize'));
+            AOS.refresh();
+        }, 200); // Đợi 200ms để trình duyệt xếp xong bố cục rồi mới bung lụa
+
+        // 2. TRỊ BỆNH ĐƠ SỐ (Dùng Intersection Observer)
+        const counters = document.querySelectorAll('.counter');
+        const speed = 40; // Tốc độ nhảy số (càng nhỏ càng nhanh)
+
+        // Tạo một "Gương thần" để soi xem các con số đã lọt vào màn hình chưa
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // Nếu các con số đã xuất hiện trên màn hình (bất kể load mới hay F5)
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target'); // Lấy số đích (38, 9, 200, 3)
+                    
+                    const updateCount = () => {
+                        const current = +counter.innerText;
+                        const increment = target / speed; // Tính bước nhảy
+                        
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current + increment);
+                            setTimeout(updateCount, 30); // Cứ 30ms nhảy số 1 lần
+                        } else {
+                            counter.innerText = target; // Chốt hạ con số cuối cùng
+                        }
+                    };
+                    
+                    updateCount();
+                    // Đếm xong thì hủy theo dõi để lúc cuộn lên cuộn xuống nó không bị đếm lại từ số 0
+                    observer.unobserve(counter);
+                }
+            });
+        }, { 
+            threshold: 0.5 // Chỉ kích hoạt khi khối đếm số lộ ra ít nhất 50%
+        });
+
+        // Gắn "Gương thần" vào từng khối số
+        counters.forEach(counter => {
+            // Reset số về 0 trước khi đếm (phòng trường hợp bị kẹt)
+            counter.innerText = '0'; 
+            counterObserver.observe(counter);
+        });
+    });
+</script>
+</body>
+</html>

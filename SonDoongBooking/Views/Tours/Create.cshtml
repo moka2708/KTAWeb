@@ -1,0 +1,50 @@
+@model SonDoongBooking.Models.Tour
+@{
+    ViewData["Title"] = "Thêm Tour Mới";
+}
+
+<div class="container mt-5">
+    <h2 class="text-success fw-bold mb-4">THÊM DỊCH VỤ TOUR MỚI</h2>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post" class="card p-4 shadow-sm border-0 rounded-4 bg-light">
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Tên Tour</label>
+                    <input asp-for="TenTour" class="form-control" placeholder="VD: Khám phá Sơn Đoòng 4N3Đ" required />
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Mô Tả</label>
+                    <textarea asp-for="MoTa" class="form-control" rows="3" placeholder="Giới thiệu về tour..."></textarea>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Giá tiền (VNĐ)</label>
+                        <input asp-for="Gia" type="number" class="form-control" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Số ngày đi</label>
+                        <input asp-for="SoNgay" type="number" class="form-control" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Số chỗ tối đa</label>
+                        <input asp-for="SoChoConTrong" type="number" class="form-control" value="20" required />
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Link Hình Ảnh minh họa</label>
+                    <input asp-for="HinhAnh" class="form-control" placeholder="Nhập đường link ảnh..." />
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4 fw-bold py-2">Quay lại</a>
+                    <button type="submit" class="btn btn-success flex-grow-1 fw-bold py-2">Tạo Tour Ngay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

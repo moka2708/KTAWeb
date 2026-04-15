@@ -1,0 +1,110 @@
+/* BẢNG MÀU CỐ ĐỊNH TẬP TRUNG VÀO NỘI DUNG */
+:root {
+    --primary: #0b2239; 
+    --accent: #27ae60;
+    --bg: #ffffff; 
+    --text: #2c3e50; 
+    --sec-bg: #f8f9fa; 
+    --card: #ffffff;
+    --nav-bg: #ffffff; 
+    --nav-text: #2c3e50; 
+}
+
+html { scroll-padding-top: 100px; scroll-behavior: smooth; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Be Vietnam Pro', sans-serif; 
+    line-height: 1.8;
+}
+
+/* NAVBAR */
+.navbar { background-color: var(--nav-bg) !important; transition: 0.4s; padding: 1.2rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1050; }
+.navbar-brand, .navbar .nav-link { color: var(--nav-text) !important; transition: 0.3s; font-weight: 600; }
+.navbar .nav-link:hover { color: var(--accent) !important; }
+.navbar.scrolled { box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 0.8rem 0; }
+
+.tracking-wider { letter-spacing: 2px; }
+
+/* HERO BANNERS */
+.hero-header { padding-top: 80px; }
+.carousel-item img { height: calc(100vh - 80px); object-fit: cover; filter: brightness(0.65); }
+.carousel-caption { bottom: 25% !important; text-shadow: 2px 2px 10px rgba(0,0,0,0.6); z-index: 10; }
+
+/* EDITORIAL SECTION (Định dạng bài viết tạp chí) */
+.editorial-section p { font-size: 1.1rem; }
+.feature-card { border: 1px solid rgba(0,0,0,0.05) !important; transition: 0.4s ease; }
+.feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important; }
+
+/* BANNER "NHỮNG CON SỐ" */
+.highlight-banner {
+    background: url('https://images.unsplash.com/photo-1589400213155-236b28014092?q=80&w=2070') center/cover fixed;
+}
+.bg-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(11, 34, 57, 0.85); /* Xanh đen của hang động */
+    z-index: 0;
+}
+
+/* REVEAL & THÀNH PHẦN KHÁC */
+.reveal { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.5, 0, 0, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.bg-light { background-color: var(--sec-bg) !important; }
+
+.gallery-img { cursor: pointer; transition: 0.4s; filter: grayscale(20%); }
+.gallery-img:hover { transform: scale(1.03); filter: grayscale(0%); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+#backToTop {
+    position: fixed; bottom: -50px; right: 20px; width: 45px; height: 45px;
+    border-radius: 50%; background: var(--accent); color: #fff; border: none;
+    transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; z-index: 1000;
+}
+#backToTop.show { bottom: 20px; opacity: 1; }
+#geology .geology-image {
+    width: 100%; /* Chiếm toàn bộ chiều rộng của cột lg-6 */
+    height: auto; /* Giữ tỷ lệ */
+    max-width: 100%; /* Đảm bảo không vượt quá container */
+}
+/* =========================================
+   GÓI ĐỘ MƯỢT (SMOOTH UI) DÀNH CHO GIÁM ĐỐC
+   ========================================= */
+
+/* 1. Cuộn trang mượt mà như lướt sóng (Áp dụng khi bấm vào Menu) */
+html {
+    scroll-behavior: smooth !important;
+}
+
+/* 2. Hiệu ứng "chuyển động mềm" cho TẤT CẢ các nút, link, thẻ card */
+a, button, .btn, .card, .dropdown-item, .nav-link {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* 3. Khi di chuột vào Nút: Nổi bồng bềnh lên 2 pixel và tỏa bóng mờ */
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Khi click vào nút: Lún xuống 1 xíu tạo cảm giác "chạm" vật lý */
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 4. Hiệu ứng cho Dropdown Menu (Đăng xuất/Quản lý) thả xuống từ từ */
+.dropdown-menu {
+    animation: menuFadeIn 0.3s ease-out forwards;
+    transform-origin: top center;
+    border: none;
+}
+
+@keyframes menuFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-15px) scale0.95;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

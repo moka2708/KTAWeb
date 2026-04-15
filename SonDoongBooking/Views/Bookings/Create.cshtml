@@ -1,0 +1,73 @@
+@model SonDoongBooking.Models.Booking
+@{
+    ViewData["Title"] = "Đặt Tour";
+}
+
+<div class="container mt-5 py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                
+                <div class="card-header bg-success text-white text-center py-4 rounded-top-4">
+                    <h3 class="fw-bold mb-0">ĐĂNG KÝ TRẢI NGHIỆM</h3>
+                    <p class="mb-0 fs-5 mt-2">@ViewBag.TenTour</p>
+                </div>
+                
+                <div class="card-body p-5 bg-light">
+                    <form id="formDatTour" asp-action="Create" method="post">
+                        
+                        <input type="hidden" asp-for="TourId" />
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Họ và Tên của bạn</label>
+                            <input asp-for="TenKhachHang" class="form-control form-control-lg" placeholder="Nhập tên..." required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Số Điện Thoại liên hệ</label>
+                            <input asp-for="SoDienThoai" class="form-control form-control-lg" placeholder="KTA Nature sẽ gọi điện tư vấn..." required />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Đoàn mấy người?</label>
+                                <input asp-for="SoNguoi" id="SoNguoi" type="number" min="1" class="form-control form-control-lg" value="1" required />
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Ngày Khởi Hành Dự Kiến</label>
+                                <input asp-for="NgayDi" class="form-control form-control-lg" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div> <div class="alert alert-warning text-center fw-bold fs-5">
+                            Giá Tour: @ViewBag.Gia.ToString("N0") VNĐ / Người
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 mt-2 shadow-sm">
+                            XÁC NHẬN ĐẶT TOUR
+                        </button>
+                        
+                        <a href="/" class="btn btn-link w-100 mt-3 text-success fw-bold text-decoration-none text-center d-block">
+                            Quay lại Trang chủ
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('formDatTour').addEventListener('submit', function(e) {
+        // Lấy số người khách vừa nhập
+        var soNguoiNhap = parseInt(document.getElementById('SoNguoi').value);
+        
+        // Lấy số chỗ còn trống thực tế từ ViewBag (Tớ dùng ?? 0 để chống lỗi nếu lỡ ViewBag bị rỗng)
+        var soChoConTrong = @(ViewBag.SoChoConTrong ?? 0); 
+
+        // Rút thẻ vàng nếu khách đặt lố
+        if (soNguoiNhap > soChoConTrong) {
+            e.preventDefault(); // Phanh gấp, không cho gửi đơn
+            alert("Rất tiếc! Tour này hiện chỉ còn " + soChoConTrong + " chỗ. Vui lòng giảm số lượng người tham gia nhé 🏕️");
+        }
+    });
+</script>

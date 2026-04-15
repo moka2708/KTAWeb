@@ -1,0 +1,46 @@
+@model SonDoongBooking.Models.Booking
+@{
+    ViewData["Title"] = "Xử lý Đơn hàng";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0 fw-bold">⚙️ CẬP NHẬT TRẠNG THÁI ĐƠN #@Model.Id</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="TourId" />
+                        <input type="hidden" asp-for="TenKhachHang" />
+                        <input type="hidden" asp-for="SoDienThoai" />
+                        <input type="hidden" asp-for="NgayDat" />
+                        <input type="hidden" asp-for="NgayDi" />
+                        <input type="hidden" asp-for="SoNguoi" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">Tên Khách Hàng</label>
+                            <input class="form-control bg-light" value="@Model.TenKhachHang" readonly />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-primary">Thay đổi Trạng thái:</label>
+                            <select asp-for="TrangThai" class="form-select border-primary shadow-sm fw-bold">
+                                <option value="Chờ xử lý">⏳ Chờ xử lý</option>
+                                <option value="Đã duyệt">✅ Đã duyệt</option>
+                                <option value="Đã hủy">❌ Đã hủy</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success fw-bold w-50">💾 Lưu Trạng Thái</button>
+                            <a asp-action="Index" class="btn btn-secondary fw-bold w-50">Quay lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

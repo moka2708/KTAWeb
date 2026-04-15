@@ -1,0 +1,187 @@
+@{
+    ViewData["Title"] = "Phân Tích Kinh Doanh Chuyên Sâu";
+}
+
+<style>
+    /* CSS Giao diện Xịn sò (Neumorphism & Hover Effects) */
+    body { background-color: #f8f9fa !important; }
+    
+    .glass-card {
+        background: #ffffff;
+        border: 1px solid rgba(255,255,255,0.8);
+        border-radius: 20px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .glass-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .gradient-text {
+        background: linear-gradient(45deg, #198754, #20c997);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+
+<div class="container-fluid py-5 min-vh-100">
+    <div class="container">
+        
+        <div class="row align-items-center mb-5 pb-3 border-bottom">
+            <div class="col-lg-5">
+                <h2 class="fw-bold text-dark mb-1">Báo Cáo Hoạt Động</h2>
+                <p class="text-muted mb-0">Hệ thống phân tích dữ liệu tự động KTA Nature</p>
+            </div>
+            
+            <div class="col-lg-7 d-flex justify-content-end gap-4 mt-4 mt-lg-0">
+                <div class="glass-card px-4 py-3 text-end">
+                    <div class="text-secondary small fw-bold tracking-wider mb-1">TỔNG THỰC THU</div>
+                    <div class="fs-3 fw-bold gradient-text d-flex align-items-baseline justify-content-end gap-1">
+                        <span class="counter" data-target="@ViewBag.TongDoanhThu">0</span> 
+                        <span class="fs-6 text-muted">VNĐ</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card px-4 py-3 text-end">
+                    <div class="text-secondary small fw-bold tracking-wider mb-1">TỔNG KHÁCH KHÁCH</div>
+                    <div class="fs-3 fw-bold text-dark d-flex align-items-baseline justify-content-end gap-1">
+                        <span class="counter" data-target="@ViewBag.TongKhach">0</span>
+                        <span class="fs-6 text-muted">người</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-xl-8 col-lg-12">
+                <div class="glass-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="text-dark fw-bold mb-0"><i class="text-success me-2">📊</i>Thống kê Doanh Thu (Triệu VNĐ)</h5>
+                    </div>
+                    
+                    <div style="height: 380px; width: 100%;">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-12">
+                <div class="glass-card p-4 h-100 d-flex flex-column align-items-center justify-content-center">
+                    <h5 class="text-dark fw-bold mb-4 w-100 text-center"><i class="text-primary me-2">🎯</i>Thị phần Khách hàng</h5>
+                    <div style="width: 100%; max-width: 300px; position: relative;">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 1. HIỆU ỨNG NHẢY SỐ (Count-Up Animation)
+        const counters = document.querySelectorAll('.counter');
+        const speed = 50; 
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace(/,/g, '');
+                const inc = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc).toLocaleString('en-US');
+                    setTimeout(updateCount, 20);
+                } else {
+                    counter.innerText = target.toLocaleString('en-US');
+                }
+            };
+            updateCount();
+        });
+
+        // 2. NHẬN DỮ LIỆU
+        const labels = @Html.Raw(ViewBag.Labels);
+        const doanhThuDaChot = @Html.Raw(ViewBag.DoanhThuDaChotData);
+        const doanhThuDuTinh = @Html.Raw(ViewBag.DoanhThuDuTinhData);
+        const khachHang = @Html.Raw(ViewBag.KhachHangData);
+        
+        Chart.defaults.color = '#858796'; 
+        Chart.defaults.font.family = "'Segoe UI', Roboto, sans-serif";
+
+        // 3. TẠO MÀU GRADIENT (Cho biểu đồ cột)
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        
+        const gradChot = ctxBar.createLinearGradient(0, 0, 0, 400);
+        gradChot.addColorStop(0, '#20c997'); // Xanh ngọc sáng
+        gradChot.addColorStop(1, '#198754'); // Xanh lá đậm
+
+        const gradDuTinh = ctxBar.createLinearGradient(0, 0, 0, 400);
+        gradDuTinh.addColorStop(0, '#f6d365'); // Vàng sáng
+        gradDuTinh.addColorStop(1, '#fda085'); // Cam ấm
+
+        // 4. VẼ BIỂU ĐỒ CỘT XỊN SÒ
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Doanh thu Thực nhận',
+                        data: doanhThuDaChot,
+                        backgroundColor: gradChot,
+                        borderRadius: 8, // Bo tròn nhiều hơn
+                        barPercentage: 0.6 // Cột thanh mảnh hơn
+                    },
+                    {
+                        label: 'Doanh thu Chờ xử lý',
+                        data: doanhThuDuTinh,
+                        backgroundColor: gradDuTinh,
+                        borderRadius: 8,
+                        barPercentage: 0.6
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                animation: {
+                    duration: 2000, // Load chậm mượt mà
+                    easing: 'easeOutQuart'
+                },
+                plugins: { 
+                    legend: { display: true, position: 'top', labels: { usePointStyle: true, padding: 20 } } 
+                }, 
+                scales: {
+                    y: { 
+                        grid: { color: '#f1f2f6', drawBorder: false }, 
+                        ticks: { callback: function(value) { return value + ' Tr'; } }
+                    },
+                    x: { grid: { display: false, drawBorder: false } }
+                }
+            }
+        });
+
+        // 5. VẼ BIỂU ĐỒ BÁNH VỚI MÀU PASTEL CHUẨN XU HƯỚNG
+        const pieColors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']; 
+        new Chart(document.getElementById('doughnutChart'), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: khachHang,
+                    backgroundColor: pieColors,
+                    borderWidth: 0, // Bỏ viền để nhìn mềm mại hơn
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                cutout: '75%', // Viền mỏng thanh lịch
+                animation: { duration: 2500, easing: 'easeOutBounce' }, // Hiệu ứng tưng tưng khi load
+                plugins: { 
+                    legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 20 } } 
+                }
+            }
+        });
+    </script>
+}

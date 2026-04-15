@@ -1,0 +1,61 @@
+@model SonDoongBooking.Models.Booking
+@{
+    ViewData["Title"] = "Chi tiết Đơn hàng";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="card-header bg-dark text-white py-4 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold tracking-wider">🎫 VÉ ĐIỆN TỬ / MÃ ĐƠN: #@Model.Id</h4>
+                    <span class="badge bg-light text-dark fs-6 px-3 py-2 rounded-pill shadow-sm">
+                        Trạng thái: @Model.TrangThai
+                    </span>
+                </div>
+                
+                <div class="card-body p-5 bg-white">
+                    <h5 class="text-success fw-bold mb-4 border-bottom pb-2">👤 THÔNG TIN KHÁCH HÀNG</h5>
+                    <div class="row mb-3 fs-5">
+                        <div class="col-sm-4 text-muted">Họ và tên:</div>
+                        <div class="col-sm-8 fw-bold text-dark">@Model.TenKhachHang</div>
+                    </div>
+                    <div class="row mb-4 fs-5">
+                        <div class="col-sm-4 text-muted">Số điện thoại:</div>
+                        <div class="col-sm-8 fw-bold text-danger">@Model.SoDienThoai</div>
+                    </div>
+
+                    <h5 class="text-primary fw-bold mb-4 border-bottom pb-2 mt-5">🎒 THÔNG TIN HÀNH TRÌNH</h5>
+                    <div class="row mb-3 fs-5">
+                        <div class="col-sm-4 text-muted">Tour đăng ký:</div>
+                        <div class="col-sm-8 fw-bold">@(Model.Tour != null ? Model.Tour.TenTour : "Đang cập nhật")</div>
+                    </div>
+                    <div class="row mb-3 fs-5">
+                        <div class="col-sm-4 text-muted">Ngày khởi hành:</div>
+                        <div class="col-sm-8 fw-bold">@Model.NgayDi.ToString("dd/MM/yyyy")</div>
+                    </div>
+                    <div class="row mb-3 fs-5">
+                        <div class="col-sm-4 text-muted">Số lượng khách:</div>
+                        <div class="col-sm-8 fw-bold">@Model.SoNguoi người</div>
+                    </div>
+                    <div class="row mb-4 fs-6">
+                        <div class="col-sm-4 text-muted">Thời gian đặt vé:</div>
+                        <div class="col-sm-8 text-secondary fst-italic">@Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+
+                    <div class="alert alert-success mt-5 p-4 d-flex justify-content-between align-items-center rounded-3">
+                        <span class="fw-bold fs-5 text-success">TỔNG THANH TOÁN:</span>
+                        <span class="fw-bold fs-2 text-success">
+                            @(Model.Tour != null ? (Model.SoNguoi * Model.Tour.Gia).ToString("N0") : "0") đ
+                        </span>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-5">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-lg btn-warning fw-bold w-50 shadow-sm">⚙️ Sửa Trạng Thái</a>
+                        <a asp-action="Index" class="btn btn-lg btn-outline-secondary fw-bold w-50">🔙 Trở về Bảng điều khiển</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
