@@ -42,18 +42,28 @@
                                             </div>
                                         </div>
                                         
-                                        @if (item.TrangThai == "Đã duyệt")
-                                        {
-                                            <span class="badge bg-success rounded-pill px-3 shadow-sm">✅ Đã chốt</span>
-                                        }
-                                        else if (item.TrangThai == "Đã hủy")
-                                        {
-                                            <span class="badge bg-danger rounded-pill px-3 shadow-sm">❌ Đã hủy</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-warning text-dark rounded-pill px-3 shadow-sm">⏳ Chờ xử lý</span>
-                                        }
+                                       @if (item.TrangThai == "Pending" || item.TrangThai == "Chờ xử lý")
+{
+    <span class="badge bg-warning text-dark shadow-sm">
+        <i class="bi bi-hourglass-split"></i> Chờ xử lý
+    </span>
+}
+else if (item.TrangThai == "Approved" || item.TrangThai == "Đã duyệt")
+{
+    <span class="badge bg-success shadow-sm">
+        <i class="bi bi-check-circle"></i> Đã duyệt
+    </span>
+}
+else if (item.TrangThai == "Cancelled" || item.TrangThai == "Đã hủy")
+{
+    <span class="badge bg-danger shadow-sm">
+        <i class="bi bi-x-circle"></i> Đã hủy
+    </span>
+}
+else
+{
+    <span class="badge bg-secondary shadow-sm">@item.TrangThai</span>
+}
                                     </div>
                                     
                                     <p class="text-muted small mb-3">Mã đơn: #@item.Id | Đặt lúc: @item.NgayDat.ToString("dd/MM/yyyy")</p>

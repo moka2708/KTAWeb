@@ -194,6 +194,11 @@ namespace SonDoongBooking.Controllers
                 }
             }
 
+            // 👇 BẢO VỆ DỮ LIỆU KHÁCH HÀNG Ở ĐÂY 👇
+            // Giữ lại Email và Ngày đặt gốc, tránh bị null khi Admin cập nhật trạng thái
+            booking.EmailNguoiDat = donHangCu.EmailNguoiDat;
+            booking.NgayDat = donHangCu.NgayDat;
+
             _context.Bookings.Update(booking);
             _context.SaveChanges();
             
